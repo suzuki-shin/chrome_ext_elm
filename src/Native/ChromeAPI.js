@@ -11,7 +11,7 @@ Elm.Native.ChromeAPI.make = function(localRuntime) {
     var Result = Elm.Result.make(localRuntime);
     var Utils = Elm.Native.Utils.make(localRuntime);
 
-    function chromeTabsQuery (queryInfo) {
+    function tabsQuery (queryInfo) {
         console.log(queryInfo);
         console.log(JSON.parse(queryInfo));
 
@@ -37,6 +37,6 @@ Elm.Native.ChromeAPI.make = function(localRuntime) {
 
     return localRuntime.Native.ChromeAPI.values = {
         log : log,
-        chromeTabsQuery : chromeTabsQuery
+        tabsQuery : tabsQuery
     };
 };

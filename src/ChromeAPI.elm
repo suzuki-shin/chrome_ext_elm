@@ -1,5 +1,5 @@
 module ChromeAPI (
-               chromeTabsQuery
+               tabsQuery
              , Tab
              , print
              , decoderListTab
@@ -11,7 +11,7 @@ module ChromeAPI (
 @docs Tab
 
 # Tab api
-@docs chromeTabsQuery, print, decoderListTab
+@docs tabsQuery, print, decoderListTab
 
 -}
 
@@ -59,9 +59,9 @@ type alias Tab =
 
     chromeTabQuery { active = True, currentWindow = True }, \tabs -> ( (url (head tabs)))
 -}
-chromeTabsQuery : QueryInfo -> Task String a
-chromeTabsQuery queryInfo =
-  Native.ChromeAPI.chromeTabsQuery (encodeQueryInfo queryInfo)
+tabsQuery : QueryInfo -> Task String a
+tabsQuery queryInfo =
+  Native.ChromeAPI.tabsQuery (encodeQueryInfo queryInfo)
 
 
 encodeQueryInfo : QueryInfo -> String

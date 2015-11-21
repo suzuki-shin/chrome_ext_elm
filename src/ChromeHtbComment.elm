@@ -1,7 +1,8 @@
 module ChromeHtbComment where
 
-import Html exposing (text)
-import ChromeAPI exposing (..)
+import Html exposing (text, ul, li, Html, br)
+import Html.Attributes exposing (style)
+import ChromeAPI
 import Maybe exposing (withDefault)
 import Debug exposing (log)
 import Task exposing (..)
@@ -10,8 +11,9 @@ import Json.Decode as JD
 import Json.Decode exposing ((:=))
 import Result
 import Http
+import Text
 
-
+-- Errorの型をStringにしたHttp.get
 httpGet : JD.Decoder value -> String -> Task String value
 httpGet dec s =
   let
@@ -27,16 +29,23 @@ httpGet dec s =
 
 port tabInfo : Task String ()
 port tabInfo =
-  ChromeAPI.chromeTabsQuery { active = True, currentWindow = True }
+  ChromeAPI.tabsQuery { active = True, currentWindow = True }
   `andThen`
   \tab -> httpGet decoderHtbInfo (htbUrl (Debug.log "tab url" (decodeTab tab).url))
   `andThen`
   \a -> Signal.send htbGetMailBox.address (Debug.log "htbinfo" a.bookmarks)
 
 
-main : Signal Element
+main : Signal Html
 main =
-  Signal.map show getHtb
+  Signal.map showBookmarkComments getBookmarks
+
+
+showBookmarkComments : List Bookmark -> Html
+showBookmarkComments bs =
+     List.filter (\t -> .comment t /= "") bs
+  |> List.map ((\b -> "「" ++ .comment b ++ "」@" ++ .user b) >> text >> \a -> li [] [a])
+  |> ul [style [("list-style-type" , "none"), ("width", "1000px")]]
 
 
 htbUrl : String -> String
@@ -44,18 +53,14 @@ htbUrl entryUrl =
   "http://b.hatena.ne.jp/entry/jsonlite/" ++ entryUrl
 
 
-getHtb : Signal (List Bookmark)
-getHtb =
+getBookmarks : Signal (List Bookmark)
+getBookmarks =
   htbGetMailBox.signal
 
 
--- getTab : Signal Tab
--- getTab =
---   Signal.map decodeTab tabQueryMailBox.signal
-
-decodeTab : String -> Tab
+decodeTab : String -> ChromeAPI.Tab
 decodeTab =
-  JD.decodeString decoderListTab
+  JD.decodeString ChromeAPI.decoderListTab
     >> Result.withDefault [dummyTab]
     >> List.head
     >> withDefault dummyTab
@@ -66,7 +71,7 @@ htbGetMailBox =
   Signal.mailbox []
 
 
-dummyTab : Tab
+dummyTab : ChromeAPI.Tab
 dummyTab =
   { active = False
   , id = 0
