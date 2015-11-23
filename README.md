@@ -7,5 +7,5 @@
 elm-make src/ChromeHtbComment.elm --output=elm.js
 ```
 
-### Install
+## Install
 chrome://extensions/ で「パッケージ化されていない拡張を読み込む」でこのプロジェクトのディレクトリを指定する
