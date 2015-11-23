@@ -69,11 +69,6 @@ encodeQueryInfo { active, currentWindow } =
   JE.encode 0 <| JE.object [("active", JE.bool active), ("currentWindow", JE.bool currentWindow)]
 
 
--- encodeTab : Tab -> String
--- encodeTab { url } =
---   JE.encode 0 <| JE.object [("url", JE.string url)]
-
-
 -- decoderTab : Decoder a
 decoderTab =
  JD.object8 Tab
@@ -86,10 +81,6 @@ decoderTab =
      ("url" := JD.string)
      ("favIconUrl" := JD.string) -- なぜかAPIからくる値が 'favIconUrl' になってる。。
 
--- encodeListTab : List Tab -> String
--- encodeListTab tabs =
---   JE.encode 0 <| JE.list <| (L.map (\t -> JE.object [("url", JE.string t.url)]) tabs)
-
 
 {-| tabs API
 
@@ -99,14 +90,9 @@ decoderListTab : Decoder (List Tab)
 decoderListTab = JD.list decoderTab
 
 
-
-
 {-| Take in any Elm value and produce a task. This task will display the value
 in your browser's developer console.
 -}
--- print : String -> Task x ()
 print : a -> Task x ()
 print value =
   Native.ChromeAPI.log (toString (Debug.log "value" value))
---   Native.ChromeAPI.log (toString (Debug.log "value" (JD.decodeString decoderListTab value)))
-
