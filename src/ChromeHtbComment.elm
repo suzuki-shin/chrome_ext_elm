@@ -1,16 +1,16 @@
 module ChromeHtbComment where
 
+import ChromeAPI
+import Debug exposing (log)
+import Graphics.Element exposing (Element, show)
 import Html exposing (text, ul, li, Html, br)
 import Html.Attributes exposing (style)
-import ChromeAPI
-import Maybe exposing (withDefault)
-import Debug exposing (log)
-import Task exposing (..)
-import Graphics.Element exposing (Element, show)
+import Http
 import Json.Decode as JD
 import Json.Decode exposing ((:=))
+import Maybe exposing (withDefault)
 import Result
-import Http
+import Task exposing (..)
 import Text
 
 -- Errorの型をStringにしたHttp.get

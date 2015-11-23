@@ -69,7 +69,7 @@ encodeQueryInfo { active, currentWindow } =
   JE.encode 0 <| JE.object [("active", JE.bool active), ("currentWindow", JE.bool currentWindow)]
 
 
--- decoderTab : Decoder a
+decoderTab : Decoder Tab
 decoderTab =
  JD.object8 Tab
      ("active" := JD.bool)
