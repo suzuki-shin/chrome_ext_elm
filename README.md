@@ -2,6 +2,9 @@
 
 [Elm Advent Calendar 2015](http://qiita.com/advent-calendar/2015/elm)のためのサンプルです。
 
+アイコンをクリックするとはてなブックマークのコメントを取得して表示します。
+
+
 ## Build
 ```
 elm-make src/ChromeHtbComment.elm --output=elm.js

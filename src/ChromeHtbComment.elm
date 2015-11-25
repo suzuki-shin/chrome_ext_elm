@@ -31,9 +31,9 @@ port tabInfo : Task String ()
 port tabInfo =
   ChromeAPI.tabsQuery { active = True, currentWindow = True }
   `andThen`
-  \tab -> httpGet decoderHtbInfo (htbUrl (Debug.log "tab url" (decodeTab tab).url))
+  \tab -> httpGet decoderHtbInfo (htbUrl (decodeTab tab).url)
   `andThen`
-  \a -> Signal.send htbGetMailBox.address (Debug.log "htbinfo" a.bookmarks)
+  \htb -> Signal.send htbGetMailBox.address htb.bookmarks
 
 
 main : Signal Html

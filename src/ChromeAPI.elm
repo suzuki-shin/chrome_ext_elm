@@ -11,7 +11,10 @@ module ChromeAPI (
 @docs Tab
 
 # Tab api
-@docs tabsQuery, print, decoderListTab
+@docs tabsQuery, decoderListTab
+
+# Debug
+@docs print
 
 -}
 
@@ -22,8 +25,6 @@ import Json.Decode as JD exposing (..)
 import List as L exposing (..)
 import Task exposing (Task)
 import Debug
-
--- type ChromeAPI = ChromeAPI
 
 {-| tabs Type
 
