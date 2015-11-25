@@ -7,6 +7,7 @@
 ![スクリーンショット](chrome_ext_elm_screen_shot.png)
 
 ## Build
+elm-0.16が必要です。
 ```
 elm-make src/ChromeHtbComment.elm --output=elm.js
 ```
