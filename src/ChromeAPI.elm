@@ -58,7 +58,7 @@ type alias Tab =
 
 {-| tabs API
 
-    chromeTabQuery { active = True, currentWindow = True }, \tabs -> ( (url (head tabs)))
+    tabsQuery
 -}
 tabsQuery : QueryInfo -> Task String a
 tabsQuery queryInfo =
